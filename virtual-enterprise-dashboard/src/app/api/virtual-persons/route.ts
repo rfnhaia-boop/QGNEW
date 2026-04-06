@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { emitEvent } from '../experiments/stream/route'; 
+import { emitEvent } from '@/lib/eventEmitter';
 
 let virtualPersons: any[] = [];
 

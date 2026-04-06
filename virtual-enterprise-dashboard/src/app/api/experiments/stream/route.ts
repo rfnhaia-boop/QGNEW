@@ -1,29 +1,16 @@
 import { NextResponse } from 'next/server';
-
-// Uma estrutura simples de EventEmitter para gerir SSE (Server-Sent Events) no Next.js
-// Num cenário ideal de produção, usaríamos Redis PubSub ou o Temporal.
-let clients: ReadableStreamDefaultController[] = [];
-
-export function emitEvent(data: any) {
-  clients.forEach((client) => {
-    try {
-      client.enqueue(`data: ${JSON.stringify(data)}\n\n`);
-    } catch (e) {
-      // client disconnected
-    }
-  });
-}
+import { addClient, removeClient } from '@/lib/eventEmitter';
 
 export async function GET(request: Request) {
   const stream = new ReadableStream({
     start(controller) {
-      clients.push(controller);
+      addClient(controller);
       
       // Envia evento de conexão inicial
       controller.enqueue(`data: ${JSON.stringify({ type: 'sys', message: 'Conectado ao Stream de Laboratório' })}\n\n`);
 
       request.signal.addEventListener('abort', () => {
-        clients = clients.filter(c => c !== controller);
+        removeClient(controller);
         try {
           controller.close();
         } catch(e) {}
