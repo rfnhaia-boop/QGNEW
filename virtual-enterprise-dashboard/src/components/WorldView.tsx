@@ -4,6 +4,7 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Grid, ContactShadows, Text, Float, Sparkles } from '@react-three/drei';
 import { useRef, useState, useMemo, useCallback } from 'react';
 import * as THREE from 'three';
+import { generateUUID } from '@/lib/utils';
 import { Brain, Plus, FlaskConical, User2, Zap, RotateCcw } from 'lucide-react';
 
 /* ============================================================
@@ -341,7 +342,7 @@ export default function WorldView() {
       : PERSON_NAMES[personIndexRef.current++ % PERSON_NAMES.length];
 
     const newAgent: AgentData = {
-      id: crypto.randomUUID(),
+      id: generateUUID(),
       name,
       type,
       position: [x, 0, z],

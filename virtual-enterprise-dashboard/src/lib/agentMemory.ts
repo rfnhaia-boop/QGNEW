@@ -3,6 +3,7 @@
    ========================================================================== */
 
 import { MemoryEntry } from './agentTypes';
+import { generateUUID } from './utils';
 
 const MAX_SHORT_TERM = 30;  // últimas N mensagens/fatos
 const MAX_LONG_TERM = 200;  // fatos importantes persistidos
@@ -13,7 +14,7 @@ export function createMemoryEntry(
   importance: number = 5
 ): MemoryEntry {
   return {
-    id: crypto.randomUUID(),
+    id: generateUUID(),
     type,
     content,
     timestamp: Date.now(),

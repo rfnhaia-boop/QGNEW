@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState, useCallback } from 'react';
+import { generateUUID } from '@/lib/utils';
 
 /* ============================================================
    TIPOS
@@ -589,7 +590,7 @@ export default function WorldCanvas() {
     const oy = (canvas.height - OFFICE.height) / 2;
 
     const newAgent: Agent = {
-      id: crypto.randomUUID(),
+      id: generateUUID(),
       name,
       type,
       x: ox + OFFICE.width / 2,

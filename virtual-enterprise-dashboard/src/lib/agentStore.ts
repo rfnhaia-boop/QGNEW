@@ -9,6 +9,7 @@ import {
 } from './agentTypes';
 import { RECOMMENDED_SKILLS, ROLE_SYSTEM_PROMPTS } from './agentSkills';
 import { addMemory, createMemoryEntry } from './agentMemory';
+import { generateUUID } from './utils';
 
 const STORAGE_KEY = 'new-holding-agents';
 
@@ -76,7 +77,7 @@ export function getManager(): AgentConfig | undefined { return _agents.find(a =>
 
 function createManager(): AgentConfig {
   return {
-    id: crypto.randomUUID(),
+    id: generateUUID(),
     name: MANAGER_NAME,
     role: 'Gerente',
     roleIcon: '🎯',
@@ -170,7 +171,7 @@ const DEFAULT_TEAM: DefaultEmployee[] = [
 
 function createDefaultEmployee(emp: DefaultEmployee): AgentConfig {
   return {
-    id: crypto.randomUUID(),
+    id: generateUUID(),
     name: emp.name,
     role: emp.role,
     roleIcon: emp.roleIcon,
@@ -218,7 +219,7 @@ export interface CreateAgentParams {
 export function createAgent(params: CreateAgentParams): AgentConfig {
   const agent: AgentConfig = {
     ...params,
-    id: crypto.randomUUID(),
+    id: generateUUID(),
     isManager: false,
     status: 'idle',
     memory: [],

@@ -8,6 +8,7 @@ import CharacterCreator, { type CreatorResult } from './CharacterCreator';
 import AgentChat from './AgentChat';
 import { initStore, getAgents, getAgent, getManager, createAgent, resetAll, type CreateAgentParams } from '@/lib/agentStore';
 import type { AgentConfig } from '@/lib/agentTypes';
+import { generateUUID } from '@/lib/utils';
 
 /* ==========================================================================
    CONSTANTES
@@ -869,7 +870,7 @@ export default function Office3D() {
     });
 
     const newAgent: AgentData = {
-      ...data, id: crypto.randomUUID(), deskIdx,
+      ...data, id: generateUUID(), deskIdx,
       x: startPos[0], y: 0, z: startPos[2],
       targetX: desk[0], targetY: 0, targetZ: desk[2],
       state: 'walking', stateTimer: 12 + Math.random() * 10, rotY: 0,

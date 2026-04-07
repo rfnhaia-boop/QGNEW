@@ -8,6 +8,7 @@ import { AgentConfig, ChatMessage } from '@/lib/agentTypes';
 import { sendToLLM, buildLLMMessages } from '@/lib/llmAdapter';
 import { addChatMessage, updateStatus, getAgent } from '@/lib/agentStore';
 import { memoryStats } from '@/lib/agentMemory';
+import { generateUUID } from '@/lib/utils';
 
 interface Props {
   agent: AgentConfig;
@@ -45,7 +46,7 @@ export default function AgentChat({ agent, onClose }: Props) {
 
     // Adicionar mensagem do user
     const userMsg: ChatMessage = {
-      id: crypto.randomUUID(),
+      id: generateUUID(),
       from: 'user',
       text: text.trim(),
       timestamp: Date.now(),
@@ -64,7 +65,7 @@ export default function AgentChat({ agent, onClose }: Props) {
 
       // Adicionar resposta do agente
       const agentMsg: ChatMessage = {
-        id: crypto.randomUUID(),
+        id: generateUUID(),
         from: 'agent',
         text: response.text,
         timestamp: Date.now(),
@@ -74,7 +75,7 @@ export default function AgentChat({ agent, onClose }: Props) {
       updateStatus(agent.id, 'idle');
     } catch (err) {
       const errMsg: ChatMessage = {
-        id: crypto.randomUUID(),
+        id: generateUUID(),
         from: 'agent',
         text: '❌ Desculpe, tive um erro ao processar. Tente novamente.',
         timestamp: Date.now(),
