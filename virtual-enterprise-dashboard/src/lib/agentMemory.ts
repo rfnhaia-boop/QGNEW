@@ -63,7 +63,7 @@ export function getMemoryContext(memories: MemoryEntry[], maxTokens: number = 50
   const important = memories.filter(m => m.importance >= 7).slice(-10);
 
   // Une sem duplicatas
-  const combined = [...new Map([...important, ...recent].map(m => [m.id, m])).values()];
+  const combined = Array.from(new Map([...important, ...recent].map(m => [m.id, m])).values());
   combined.sort((a, b) => a.timestamp - b.timestamp);
 
   const lines = combined.map(m => {
