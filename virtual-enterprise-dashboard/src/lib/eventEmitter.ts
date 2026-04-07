@@ -3,7 +3,8 @@ export let clients: ReadableStreamDefaultController[] = [];
 export function emitEvent(data: any) {
   clients.forEach((client) => {
     try {
-      client.enqueue(`data: ${JSON.stringify(data)}\n\n`);
+      const encoder = new TextEncoder();
+      client.enqueue(encoder.encode(`data: ${JSON.stringify(data)}\n\n`));
     } catch (e) {
       // client disconnected
     }
